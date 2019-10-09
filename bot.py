@@ -10,7 +10,7 @@ dispatcher = updater.dispatcher
 def startCommand(bot, update):
     bot.send_message(chat_id=update.message.chat_id, text='Привет, пообщайся со мной)')
 def textMessage(bot, update):
-    response = 'Ты мне написал: ' + update.message.text + ', ты что офигел????????'
+    response = 'Ты мне написал: ' + update.message.text + ', пиши еще что-нибудь!'
     bot.send_message(chat_id=update.message.chat_id, text=response)
 
 def main():
