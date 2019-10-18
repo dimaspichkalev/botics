@@ -7,6 +7,9 @@ from task_extractor import TaskExtractor
 
 updater = Updater(token='875476550:AAHMX4LaLDpsh8oWcQNw7yieufZEA_7T8p4') # Токен API к Telegram
 dispatcher = updater.dispatcher
+data = pd.read_csv('tasks.csv', sep=';')
+normalized_tasks_set = preprocess_tasks_set(data)
+extractor = TaskExtractor(normalized_tasks_set)
 
 
 # Обработка команд
@@ -19,9 +22,6 @@ def textMessage(bot, update):
 	bot.send_message(chat_id=update.message.chat_id, text=response)
 
 def main():
-	data = pd.read_csv('tasks.csv', sep=';')
-	normalized_tasks_set = preprocess_tasks_set(data)
-	extractor = TaskExtractor(normalized_tasks_set)
 	# Хендлеры
 	start_command_handler = CommandHandler('start', startCommand)
 	text_message_handler = MessageHandler(Filters.text, textMessage)
@@ -32,10 +32,11 @@ def main():
 	updater.start_polling(clean=True)
 	# Останавливаем бота, если были нажаты Ctrl + C
 	updater.idle()
+	
 
 
-if __name__ == '__main__':  
-    try:
-        main()
-    except KeyboardInterrupt:
-        exit()
+if __name__ == '__main__':
+	try:
+		main()
+	except KeyboardInterrupt:
+		exit()
