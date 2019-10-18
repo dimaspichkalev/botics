@@ -1,5 +1,7 @@
 # Настройки
 from telegram.ext import Updater, CommandHandler, MessageHandler, Filters
+from data_work import *
+from task_extractor import TaskExtractor
 
 
 updater = Updater(token='875476550:AAHMX4LaLDpsh8oWcQNw7yieufZEA_7T8p4') # Токен API к Telegram
@@ -9,11 +11,16 @@ dispatcher = updater.dispatcher
 # Обработка команд
 def startCommand(bot, update):
     bot.send_message(chat_id=update.message.chat_id, text='Привет, пообщайся со мной)')
+
 def textMessage(bot, update):
-    response = 'Ты мне написал: ' + update.message.text + ', пиши еще что-нибудь!'
+	code_response = extractor.extract_symptoms(update.message.text)
+    response = 'Ты мне написал: {0}, из этого я выделил следущее: {1}'.format(update.message.text, code_response)
     bot.send_message(chat_id=update.message.chat_id, text=response)
 
 def main():
+	data = pd.read_csv('tasks.csv', sep=';')
+	normalized_tasks_set = data_work.preprocess_symptoms_set(data)
+	extractor = TaskExtractor(normalized_tasks_set)
 	# Хендлеры
 	start_command_handler = CommandHandler('start', startCommand)
 	text_message_handler = MessageHandler(Filters.text, textMessage)
