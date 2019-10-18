@@ -1,6 +1,7 @@
 # Настройки
 from telegram.ext import Updater, CommandHandler, MessageHandler, Filters
-from data_work import *
+import pandas as pd
+from data_work import preprocess_tasks_set
 from task_extractor import TaskExtractor
 
 
@@ -14,12 +15,12 @@ def startCommand(bot, update):
 
 def textMessage(bot, update):
 	code_response = extractor.extract_symptoms(update.message.text)
-    response = 'Ты мне написал: {0}, из этого я выделил следущее: {1}'.format(update.message.text, code_response)
-    bot.send_message(chat_id=update.message.chat_id, text=response)
+	response = 'Ты мне написал: {0}, из этого я выделил следущее: {1}'.format(update.message.text, code_response)
+	bot.send_message(chat_id=update.message.chat_id, text=response)
 
 def main():
 	data = pd.read_csv('tasks.csv', sep=';')
-	normalized_tasks_set = data_work.preprocess_symptoms_set(data)
+	normalized_tasks_set = preprocess_tasks_set(data)
 	extractor = TaskExtractor(normalized_tasks_set)
 	# Хендлеры
 	start_command_handler = CommandHandler('start', startCommand)
