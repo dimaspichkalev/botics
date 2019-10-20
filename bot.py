@@ -3,13 +3,16 @@ from telegram.ext import Updater, CommandHandler, MessageHandler, Filters
 import pandas as pd
 from data_work import preprocess_tasks_set
 from task_extractor import TaskExtractor
+from open_card import prepare_dataset
 
 
 updater = Updater(token='875476550:AAHMX4LaLDpsh8oWcQNw7yieufZEA_7T8p4') # Токен API к Telegram
 dispatcher = updater.dispatcher
 data = pd.read_csv('tasks.csv', sep=';')
+data = data.set_index('task').T.to_dict('list')
 normalized_tasks_set = preprocess_tasks_set(data)
 extractor = TaskExtractor(normalized_tasks_set)
+extractors = {'open_card': TaskExtractor(prepare_dataset())}
 
 
 # Обработка команд
@@ -20,6 +23,12 @@ def textMessage(bot, update):
 	code_response = extractor.extract_symptoms(update.message.text)
 	response = 'Ты мне написал: {0}, из этого я выделил следущее: {1}'.format(update.message.text, code_response)
 	bot.send_message(chat_id=update.message.chat_id, text=response)
+	inside_extractor = extractors[code_response]
+	client_id = inside_extractor.extract_symptoms(update.message.text)
+	url_base = 'https://dev.greendatasoft.ru/#/card/'
+	full_url = url_base + str(client_id)
+	bot.send_message(chat_id=update.message.chat_id, text=full_url)
+
 
 def main():
 	# Хендлеры

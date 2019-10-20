@@ -10,8 +10,7 @@ def preprocess_tasks_set(tasks_set):
     :return: коллекция задач и их синонимов
     """
     normalized_dict = {}
-    data_dict = tasks_set.set_index('task').T.to_dict('list')
-    for task, synonyms in data_dict.items():
+    for task, synonyms in tasks_set.items():
         syn = []
         for s in synonyms:
             synonym = ""
