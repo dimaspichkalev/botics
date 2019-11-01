@@ -25,7 +25,7 @@ class TaskExtractor:
         self.data_dict = data_dict
         self.non_stop_words = init_non_stop_words(self.data_dict)
 
-    def extract_symptoms(self, input_phrase):
+    def extract_tasks(self, input_phrase):
         """
         Алгоритм извлечения задач из сообщения пользователя
         :param input_phrase: сообщение пользователя
