@@ -1,12 +1,13 @@
 # Настройки
 from telegram.ext import Updater, CommandHandler, MessageHandler, Filters
 import pandas as pd
+import os
 from data_work import preprocess_tasks_set
 from task_extractor import TaskExtractor
 from open_card import prepare_dataset
 
-
-updater = Updater(token='875476550:AAHMX4LaLDpsh8oWcQNw7yieufZEA_7T8p4') # Токен API к Telegram
+token='875476550:AAHMX4LaLDpsh8oWcQNw7yieufZEA_7T8p4'
+updater = Updater(token=os.environ["TELEGRAM_TOKEN"]) # Токен API к Telegram
 dispatcher = updater.dispatcher
 data = pd.read_csv('tasks.csv', sep=';')
 data = data.set_index('task').T.to_dict('list')
