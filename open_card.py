@@ -4,10 +4,11 @@ import os
 from data_work import preprocess_tasks_set
 import requests
 
-auth_url = os.environ['AUTH_URL']
+
 
 
 def prepare_dataset():
+	auth_url = os.environ['AUTH_URL']
 	auth_data = {'j_username': os.environ['GREENDATA_USER'], 
 	         'j_password': os.environ['GREENDATA_PWD']}
 	get_uriki_url = os.environ['GET_URIKI_URL']
