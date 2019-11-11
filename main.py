@@ -3,11 +3,12 @@ import requests
 import sys
 import json
 from bot_main import analyze_message
+import os
 
-token = 'AVNTHE50Q3YU1M7CA6IZWDVAWWSKYNF3'
-url = "https://dev.greendatasoft.ru/api/authentication"
+token = os.environ['GREENDATA_TOKEN']
+url = os.environ['AUTH_URL']
 post_url = "https://dev.greendatasoft.ru/"
-payload = {'j_username': 'dimaspichkalev@gmail.com', 'j_password': 'asuchatbot145'}
+payload = {'j_username': os.environ['GREENDATA_USER'], 'j_password': os.environ['GREENDATA_PWD']}
 
 headers = {'Content-type': 'application/json',  # Определение типа данных
            'Accept': 'application/json',
