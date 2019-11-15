@@ -14,6 +14,7 @@ extractors = {'open_card': TaskExtractor(prepare_dataset())}
 def analyze_message(message_text):
 	code_response = extractor.extract_tasks(message_text)
 	response = 'Ты мне написал: {0}, из этого я выделил следущее: {1}\n\n'.format(message_text, code_response)
+	retrn code_response
 	if code_response != '':
 		if code_response in extractors:
 			inside_extractor = extractors[code_response]
