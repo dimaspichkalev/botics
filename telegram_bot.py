@@ -2,9 +2,9 @@
 from telegram.ext import Updater, CommandHandler, MessageHandler, Filters
 import pandas as pd
 import os
-from data_work import preprocess_tasks_set
-from task_extractor import TaskExtractor
-from open_card import prepare_dataset
+from utils.data_work import preprocess_tasks_set
+from utils.task_extractor import TaskExtractor
+from tasks.open_card import prepare_dataset
 
 updater = Updater(token=os.environ["TELEGRAM_TOKEN"]) # Токен API к Telegram
 dispatcher = updater.dispatcher
