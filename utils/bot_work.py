@@ -8,7 +8,7 @@ data = pd.read_csv(str(Path().absolute().joinpath('data').joinpath('tasks.csv'))
 data = data.set_index('task').T.to_dict('list')
 normalized_tasks_set = preprocess_tasks_set(data)
 extractor = TaskExtractor(normalized_tasks_set)
-extractors = {'open_card': TaskExtractor(prepare_dataset())}
+extractors = {'open_card': TaskExtractor(prepare_dataset()), 'open_tasks': '1'}
 
 
 def analyze_message(message_text):
