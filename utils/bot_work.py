@@ -21,6 +21,9 @@ def analyze_message(message_text):
 			if code_response == 'open_card':
 				task_response = get_open_card_task_response(inside_extractor, message_text)
 				return response + task_response
+			if code_response == 'open_tasks':
+				task_response = 'открыть задачи'
+				return response + task_response
 		else:
 			return 'Я увидел команду {0}, но не знаю что с ней делать :('.format(code_response)
 	else:
