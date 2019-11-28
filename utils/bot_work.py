@@ -14,7 +14,6 @@ extractors = {'open_card': TaskExtractor(prepare_dataset()), 'open_tasks': '1'}
 def analyze_message(message_text):
 	code_response = extractor.extract_tasks(message_text)
 	response = 'Ты мне написал: {0}, из этого я выделил следущее: {1}\n\n'.format(message_text, code_response)
-	return extractors
 	
 	if code_response != '':
 		if code_response in extractors:
@@ -26,7 +25,7 @@ def analyze_message(message_text):
 				task_response = 'открыть задачи'
 				return response + task_response
 		else:
-			return 'Я увидел команду {0}, но не знаю что с ней делать :('.format(code_response)
+			return 'Я увидел команду {0}, 1111111111111но не знаю что с ней делать :('.format(code_response)
 	else:
 		return 'Ничего не понял'
 
