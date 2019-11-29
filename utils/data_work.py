@@ -2,6 +2,7 @@ from nltk.corpus import stopwords
 import pymorphy2
 import requests
 import os
+from utils.task_extractor import TaskExtractor
 
 stop_words = stopwords.words('russian')
 morph = pymorphy2.MorphAnalyzer()
