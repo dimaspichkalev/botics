@@ -21,12 +21,6 @@ headers = {
 
 app = Flask(__name__)
 
-
-@app.route("/index")
-def hello():
-	return "hello"
-
-
 @app.before_request
 def before_request():
 	if request.url.startswith('http://'):
@@ -44,7 +38,7 @@ def message():
 			body = {
 				"text": analyze_message(message)
 			}
-		url_post = 'https://dev.greendatasoft.ru/api/bot/%s/chat/%d/post' % (token, chat)
+		url_post = "https://dev.greendatasoft.ru/api/bot/{0}/chat/{1}/post".format(token, chat)
 		with requests.session() as session:
 			session.post(url, payload)
 			if not (authorisbot):
