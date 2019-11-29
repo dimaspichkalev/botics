@@ -51,7 +51,7 @@ class TaskExtractor:
 
         for task, synonyms in self.data_dict.items():
             if preprocess_input in self.data_dict[task]:
-                extracted_tasks.append(str(task))
+                extracted_tasks[str(task)] = str(synonym)
                 tmp = True
 
         if not tmp:
@@ -60,7 +60,7 @@ class TaskExtractor:
                     for synonym in self.data_dict[task]:
                         if gram in synonym:
                             if task not in extracted_tasks:
-                                extracted_tasks.append(str(task))
+                                extracted_tasks[str(task)] = str(synonym)
 
-        extracted_string = ' '.join(extracted_tasks)
-        return extracted_string
+        # extracted_string = ' '.join(extracted_tasks)
+        return extracted_tasks

@@ -27,4 +27,4 @@ def get_open_card_task_response(inside_extractor, message_text):
 	client_id = inside_extractor.extract_tasks(message_text)
 	url_base = 'https://dev.greendatasoft.ru/#/card/'
 	full_url = url_base + str(client_id)
-	return full_url
+	return client_id
