@@ -25,7 +25,7 @@ def analyze_message(message_text):
 				task_response = 'открыть задачи'
 				return response + task_response
 		else:
-			return 'Я увидел команду {0}, 1111111111111но не знаю что с ней делать :('.format(code_response)
+			return 'Я увидел команду {0}, 1111111111111но не знаю что с ней делать :( '.format(code_response)
 	else:
-		return 'Ничего не понял'
+		return 'Ничего не понял, но все меняется'
 
