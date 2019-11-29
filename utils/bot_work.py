@@ -19,7 +19,7 @@ def analyze_message(message_text):
 	
 	if code_response != '':
 		if code_response in extractors:
-			inside_extractor = extractors[code_response]
+			inside_extractor = extractors['open_card']
 			return inside_extractor
 			if code_response == 'open_card':
 				response += 'открыть карточку'
