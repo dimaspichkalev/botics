@@ -1,5 +1,7 @@
 from nltk.corpus import stopwords
 import pymorphy2
+import requests
+import os
 
 stop_words = stopwords.words('russian')
 morph = pymorphy2.MorphAnalyzer()
@@ -21,3 +23,34 @@ def preprocess_tasks_set(tasks_set):
                 syn.append(synonym.strip())
         normalized_dict[task] = list(syn)
     return normalized_dict
+
+def get_all_bot_commands():
+    auth_url = os.environ['AUTH_URL']
+    auth_data = {
+        'j_username': os.environ['GREENDATA_USER'],
+        'j_password': os.environ['GREENDATA_PWD']
+    }
+    get_command_url = 'https://dev.greendatasoft.ru/api/sys/objTypes/1192802/objects'
+    with requests.Session() as session:
+        session.post(auth_url, auth_data)
+        response = session.get(get_command_url)
+    resp = response.json()
+    command_dict = {}
+    for i in resp['content']:
+        element = i['values']['CB_COMMAND_ID']['value'][0]
+        if '@id' not in element:
+            if element['@ref'] not in command_dict:
+                command_dict[element['@ref']] = None
+        else:
+            command_dict[element['@id']] = element['values']['NAME']['value']
+    
+    new_dict = {}
+    for i in resp['content']:
+        element = i['values']['CB_COMMAND_ID']['value'][0]
+        task_id = element['@id'] if ('@id' in element) else i['values']['CB_COMMAND_ID']['value'][0]['@ref']
+        if command_dict[task_id] not in new_dict:
+            new_dict[command_dict[task_id]] = []
+        synonim = i['values']['NAME']['value']
+        new_dict[command_dict[task_id]].append(synonim)
+    normalized_tasks_set = preprocess_tasks_set(new_dict)
+    return TaskExtractor(normalized_tasks_set)

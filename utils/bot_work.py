@@ -1,6 +1,6 @@
 import pandas as pd
 from pathlib import Path
-from utils.data_work import preprocess_tasks_set
+from utils.data_work import preprocess_tasks_set, get_all_bot_commands
 from utils.task_extractor import TaskExtractor
 from tasks.open_card import prepare_dataset, get_open_card_task_response
 
@@ -30,34 +30,3 @@ def analyze_message(message_text):
 	else:
 		return 'Ничего не понял, но все меняется'
 
-
-def get_all_bot_commands():
-	auth_url = os.environ['AUTH_URL']
-	auth_data = {
-		'j_username': os.environ['GREENDATA_USER'],
-		'j_password': os.environ['GREENDATA_PWD']
-	}
-	get_command_url = 'https://dev.greendatasoft.ru/api/sys/objTypes/1192802/objects'
-	with requests.Session() as session:
-		session.post(auth_url, auth_data)
-		response = session.get(get_command_url)
-	resp = response.json()
-	command_dict = {}
-	for i in resp['content']:
-	    element = i['values']['CB_COMMAND_ID']['value'][0]
-	    if '@id' not in element:
-	        if element['@ref'] not in command_dict:
-	            command_dict[element['@ref']] = None
-	    else:
-	        command_dict[element['@id']] = element['values']['NAME']['value']
-	
-	new_dict = {}
-	for i in resp['content']:
-	    element = i['values']['CB_COMMAND_ID']['value'][0]
-	    task_id = element['@id'] if ('@id' in element) else i['values']['CB_COMMAND_ID']['value'][0]['@ref']
-	    if command_dict[task_id] not in new_dict:
-	        new_dict[command_dict[task_id]] = []
-	    synonim = i['values']['NAME']['value']
-	    new_dict[command_dict[task_id]].append(synonim)
-	normalized_tasks_set = preprocess_tasks_set(new_dict)
-	return TaskExtractor(normalized_tasks_set)
