@@ -9,7 +9,7 @@ from tasks.open_card import prepare_dataset, get_open_card_task_response
 # normalized_tasks_set = preprocess_tasks_set(data)
 # main_extractor = TaskExtractor(normalized_tasks_set)
 main_extractor = get_all_bot_commands()
-extractors = {'open_card': TaskExtractor(prepare_dataset()), 'open_tasks': '1'}
+extractors = {'open_card': TaskExtractor(prepare_dataset()), 'get_tasks': 'https://dev.greendatasoft.ru/#/registry/Task/'}
 
 
 def analyze_message(message_text):
@@ -22,11 +22,11 @@ def analyze_message(message_text):
 			if code_response == 'open_card':
 				task_response = get_open_card_task_response(inside_extractor, message_text)
 				return response + task_response
-			if code_response == 'open_tasks':
-				task_response = 'https://dev.greendatasoft.ru/#/registry/Task/'
+			if code_response == 'get_tasks':
+				task_response = inside_extractor
 				return response + task_response
 		else:
-			return 'Я увидел команду {0}, 1111111111111но не знаю что с ней делать :( '.format(code_response)
+			return 'Я увидел команду {0}, но не знаю что с ней делать :( '.format(code_response)
 	else:
 		return 'Ничего не понял, но все меняется'
 
