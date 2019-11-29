@@ -19,14 +19,14 @@ def analyze_message(message_text):
 	
 	if code_response != '':
 		if code_response in extractors:
-			inside_extractor = extractors['open_card']
+			inside_extractor = extractors[code_response]
 			return inside_extractor
 			if code_response == 'open_card':
-				response += 'открыть карточку'
+				response += 'открыть карточку \n'
 				task_response = get_open_card_task_response(inside_extractor, message_text)
 				return response + task_response
 			if code_response == 'get_tasks':
-				response += 'открыть задачи'
+				response += 'открыть задачи \n'
 				task_response = response + inside_extractor
 				return task_response
 		else:
