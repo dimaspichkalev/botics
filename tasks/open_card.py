@@ -28,10 +28,10 @@ def get_open_card_task_response(inside_extractor, message_text):
 	client_list = client_id.split(' ')
 	response = ''
 	if len(client_id) > 0:
-		response = "По данному запросу найдены следующие организации: \n"
+		response = "По данному запросу найдены следующие организации: \n\n"
 		url_card = "https://dev.greendatasoft.ru/#/card"
 		for id in client_list:
-			response += "<button><a href='{0}/{1}' target='_blank'>{2}</a></button>\n".format(url_card, client_id, 'text')
+			response += "<button><a href='{0}/{1}' target='_blank'>{2}</a></button>\n\n".format(url_card, client_id, 'text')
 	else:
 		response = "По данному запросу ничего не найдено"
 	return response
