@@ -25,6 +25,13 @@ def prepare_dataset():
 
 def get_open_card_task_response(inside_extractor, message_text):
 	client_id = inside_extractor.extract_tasks(message_text)
-	url_base = 'https://dev.greendatasoft.ru/#/card/'
-	full_url = url_base + str(client_id)
-	return client_id
+	client_list = client_id.split(' ')
+	response = ''
+	if len(client_id) > 0:
+		response = "По данному запросу найдены следующие организации: \n"
+		url_card = "https://dev.greendatasoft.ru/#/card"
+		for id in client_list:
+			response += "<button><a href='{0}/{1}' target='_blank'>{2}</a></button>\n".format(url_card, client_id, 'text')
+	else:
+		response = "По данному запросу ничего не найдено"
+	return response

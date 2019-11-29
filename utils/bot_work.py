@@ -22,7 +22,6 @@ def analyze_message(message_text):
 			inside_extractor = extractors[code_response]
 			
 			if code_response == 'open_card':
-				response += 'открыть карточку \n'
 				task_response = get_open_card_task_response(inside_extractor, message_text)
 				return response + task_response
 			if code_response == 'get_tasks':
