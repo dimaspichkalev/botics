@@ -21,7 +21,7 @@ def analyze_message(message_text):
 				response += 'Открыть задачи \n'
 				task_response = response.format('открытия текущих задач') + inside_response
 				return task_response
-			if code_response == 'get_tasks':
+			if code_response == 'say_hello':
 				task_response = 'Здравствуйте! Чем я могу вам помочь?'
 				return task_response
 		else:
