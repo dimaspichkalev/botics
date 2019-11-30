@@ -21,7 +21,7 @@ def prepare_dataset():
 	# data = pd.read_csv('urici.csv', sep=';')
 	# data = data.set_index('task').T.to_dict('list')
 	normalized_clients_set = preprocess_tasks_set(clients_dic)
-	return classic_set, normalized_clients_set
+	return clients_dic, normalized_clients_set
 
 
 def get_open_card_task_response(message_text):
