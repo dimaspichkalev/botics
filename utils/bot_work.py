@@ -10,16 +10,16 @@ response_funcs = {'open_card': '', 'get_tasks': url_get_tasks}
 
 def analyze_message(message_text):
 	code_response = main_extractor.extract_tasks(message_text)
-	response = 'Ты мне написал: {0}, из этого я выделил следущее: \n\n'.format(message_text)
+	response = 'Выполняю команду {0}...\n\n'
 	if code_response != '':
 		if code_response in response_funcs:
 			inside_response = response_funcs[code_response]
 			if code_response == 'open_card':
-				task_response = response + get_open_card_task_response(message_text)
+				task_response = response.format('поиска юр. лиц') + get_open_card_task_response(message_text)
 				return task_response
 			if code_response == 'get_tasks':
 				response += 'Открыть задачи \n'
-				task_response = response + inside_response
+				task_response = response.format('открытия текущих задач') + inside_response
 				return task_response
 		else:
 			return 'Я увидел команду {0}, но не знаю что с ней делать :('.format(code_response)
