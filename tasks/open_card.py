@@ -34,7 +34,7 @@ def get_open_card_task_response(message_text):
 		response = "По данному запросу найдены следующие организации: \n\n"
 		url_card = "https://dev.greendatasoft.ru/#/card"
 		for cid in client_list:
-			client_name = classis_set[int(cid)]
+			client_name = classis_set[int(cid)][0]
 			response = response + "<button><a href='{0}/{1}' target='_blank'>{2}</a></button>\n\n".format(url_card, cid, client_name)
 	else:
 		response = "По данному запросу ничего не найдено"
