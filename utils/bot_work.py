@@ -1,30 +1,25 @@
 import pandas as pd
 from pathlib import Path
 from utils.data_work import preprocess_tasks_set, get_all_bot_commands
-from utils.task_extractor import TaskExtractor
-from tasks.open_card import prepare_dataset, get_open_card_task_response
+from tasks.open_card import get_open_card_task_response
 
-# data = pd.read_csv(str(Path().absolute().joinpath('data').joinpath('tasks.csv')), sep=';')
-# data = data.set_index('task').T.to_dict('list')
-# normalized_tasks_set = preprocess_tasks_set(data)
-# main_extractor = TaskExtractor(normalized_tasks_set)
 url_get_tasks = 'https://dev.greendatasoft.ru/#/registry/Task/881611'
 main_extractor = get_all_bot_commands()
-extractors = {'open_card': TaskExtractor(prepare_dataset()), 'get_tasks': url_get_tasks}
+response_funcs = {'open_card': '', 'get_tasks': url_get_tasks}
 
 
 def analyze_message(message_text):
 	code_response = main_extractor.extract_tasks(message_text)
 	response = 'Ты мне написал: {0}, из этого я выделил следущее: \n\n'.format(message_text)
 	if code_response != '':
-		if code_response in extractors:
-			inside_extractor = extractors[code_response]
+		if code_response in response_funcs:
+			inside_response = response_funcs[code_response]
 			if code_response == 'open_card':
-				task_response = response + get_open_card_task_response(inside_extractor, message_text)
+				task_response = response + get_open_card_task_response(message_text)
 				return task_response
 			if code_response == 'get_tasks':
 				response += 'Открыть задачи \n'
-				task_response = response + inside_extractor
+				task_response = response + inside_response
 				return task_response
 		else:
 			return 'Я увидел команду {0}, но не знаю что с ней делать :('.format(code_response)

@@ -1,5 +1,6 @@
 import os
 from utils.data_work import preprocess_tasks_set
+from utils.task_extractor import TaskExtractor
 import requests
 
 
@@ -23,7 +24,9 @@ def prepare_dataset():
 	return normalized_clients_set
 
 
-def get_open_card_task_response(inside_extractor, message_text):
+def get_open_card_task_response(message_text):
+	ur_dataset = prepare_dataset()
+	inside_extractor = TaskExtractor(ur_dataset)
 	client_id = inside_extractor.extract_tasks(message_text)
 	client_list = client_id.split(' ')
 	response = ""
@@ -31,7 +34,8 @@ def get_open_card_task_response(inside_extractor, message_text):
 		response = "По данному запросу найдены следующие организации: \n\n"
 		url_card = "https://dev.greendatasoft.ru/#/card"
 		for cid in client_list:
-			response = response + "<button><a href='{0}/{1}' target='_blank'>{2}</a></button>\n\n".format(url_card, cid, cid)
+			client_name = ur_dataset[cid]
+			response = response + "<button><a href='{0}/{1}' target='_blank'>{2}</a></button>\n\n".format(url_card, cid, client_name)
 	else:
 		response = "По данному запросу ничего не найдено"
 	return response
