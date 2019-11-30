@@ -5,7 +5,7 @@ from tasks.open_card import get_open_card_task_response
 
 url_get_tasks = 'https://dev.greendatasoft.ru/#/registry/Task/881611'
 main_extractor = get_all_bot_commands()
-response_funcs = {'open_card': '', 'get_tasks': url_get_tasks}
+response_funcs = {'open_card': '', 'get_tasks': url_get_tasks, 'say_hello': ''}
 
 
 def analyze_message(message_text):
@@ -20,6 +20,9 @@ def analyze_message(message_text):
 			if code_response == 'get_tasks':
 				response += 'Открыть задачи \n'
 				task_response = response.format('открытия текущих задач') + inside_response
+				return task_response
+			if code_response == 'get_tasks':
+				task_response = 'Здравствуйте! Чем я могу вам помочь?'
 				return task_response
 		else:
 			return 'Я увидел команду {0}, но не знаю что с ней делать :('.format(code_response)
