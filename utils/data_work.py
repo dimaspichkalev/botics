@@ -69,7 +69,7 @@ def get_commands_url(command_id):
     resp = response.json()
     
     for i in resp['content']:
-        element = i['values']['CB_COMMAND_ID']['value']['values']['ID']['value']
+        element = i['values']['CB_COMMAND_OBJECT_ID']['value'][0]['values']['ID']['value']
         if int(element) == int(command_id):
             return i['values']['NAME']['value']
     return ''
