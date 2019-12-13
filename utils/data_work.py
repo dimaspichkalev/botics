@@ -64,7 +64,7 @@ def get_commands_url(command_id):
 
     with requests.Session() as session:
         session.post(auth_url, auth_data)
-        response = session.get(get_command_url)
+        response = session.get(get_commands_url_link)
 
     resp = response.json()
     
