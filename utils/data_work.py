@@ -56,9 +56,9 @@ def get_all_bot_commands():
         synonim = i['values']['NAME']['value']
         new_dict[command_dict[task_id]].append(synonim)
     normalized_tasks_set = preprocess_tasks_set(new_dict)
-    return TaskExtractor(normalized_tasks_set)
+    return TaskExtractor(normalized_tasks_set), normalized_tasks_set.keys()
 
-def get_commands_url(command_id):
+def get_url_by_command_object(command_name):
 
     get_commands_url_link = 'https://dev.greendatasoft.ru/api/sys/objTypes/1210621/objects'
 
@@ -69,7 +69,7 @@ def get_commands_url(command_id):
     resp = response.json()
     
     for i in resp['content']:
-        element = i['values']['CB_COMMAND_OBJECT_ID']['value'][0]['values']['ID']['value']
-        if int(element) == int(command_id):
+        element = i['values']['CB_COMMAND_OBJECT_ID']['value'][0]['values']['NAME']['value']
+        if int(element) == int(command_name):
             return i['values']['NAME']['value']
     return ''
