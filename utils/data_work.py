@@ -70,6 +70,6 @@ def get_url_by_command_object(command_name):
     
     for i in resp['content']:
         element = i['values']['CB_COMMAND_OBJECT_ID']['value'][0]['values']['NAME']['value']
-        if int(element) == int(command_name):
+        if element == command_name:
             return i['values']['NAME']['value']
     return ''
