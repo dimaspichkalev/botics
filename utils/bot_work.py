@@ -23,7 +23,7 @@ def analyze_message(message_text):
 			task_response = 'Здравствуйте! Чем я могу вам помочь?'
 			return task_response
 		else:
-			response += 'Я увидел команду {0}, применяю универсальный алгоритм, возвращаю ссылку на объект в базе!'.format(code_response)
+			response = 'Я увидел команду {0}, применяю универсальный алгоритм, возвращаю ссылку на объект в базе!\n\n'.format(code_response)
 			response += get_url_by_command_object(code_response)
 			return response
 	else:
