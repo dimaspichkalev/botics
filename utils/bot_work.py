@@ -4,10 +4,10 @@ from utils.data_work import preprocess_tasks_set, get_all_bot_commands, get_url_
 from tasks.open_card import get_open_card_task_response
 
 url_get_tasks = 'https://dev.greendatasoft.ru/#/registry/Task/881611'
-main_extractor, commands_list = get_all_bot_commands()
 
 
 def analyze_message(message_text):
+	main_extractor, commands_list = get_all_bot_commands()
 	code_response = main_extractor.extract_tasks(message_text)
 	response = 'Выполняю команду {0}...\n\n'
 	if code_response != '' and code_response in commands_list:
